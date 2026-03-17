@@ -1,0 +1,12 @@
+FROM adminer:latest
+
+USER root
+
+RUN curl -fsSL https://raw.githubusercontent.com/vrana/adminer/master/designs/pepa-linha/adminer.css \
+    -o /var/www/html/adminer.css
+
+COPY index.php /var/www/html/index.php
+
+RUN chown -R adminer:adminer /var/www/html
+
+USER adminer

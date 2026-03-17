@@ -1,7 +1,9 @@
 
 services:
   mysql:
-    image: mysql:8
+    build: 
+      context: ./deploy/mysql
+      dockerfile: dockerfile
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -81,7 +83,9 @@ services:
       - "traefik.http.routers.nginx2.entrypoints=web"
 
   minio:
-    image: minio/minio
+    build: 
+      context: ./deploy/minio
+      dockerfile: dockerfile
     command: server /data --console-address ":9001"
     container_name: minio
     environment:
@@ -94,20 +98,43 @@ services:
     ports:
       - 9000:9000
       - 9001:9001
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.localhost`)"
+      - "traefik.http.routers.minio.entrypoints=web"
 
   traefik:
-    image: traefik:v3.4
+    build: 
+      context: ./deploy/traefik
+      dockerfile: dockerfile
     container_name: traefik
-    command:
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
+      - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
       - app-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+  
+  adminer:
+    build: 
+      context: ./deploy/adminer
+      dockerfile: dockerfile
+    container_name: adminer
+    restart: always
+    ports:
+      - "8088:8080"
+    networks:
+      - app-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer.rule=Host(`adminer.localhost`)"
+      - "traefik.http.routers.adminer.entrypoints=web"
+      - "traefik.http.services.adminer.loadbalancer.server.port=8080"
 
 networks:
   app-network:

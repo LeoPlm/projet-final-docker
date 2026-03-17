@@ -1,0 +1,14 @@
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+# On active l'interface graphique
+# On y accede sans mot de passe
+api:
+  dashboard: true
+  insecure: true

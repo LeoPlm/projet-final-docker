@@ -1,0 +1,7 @@
+# Exemple de l'intérêt d'utiliser un dockerfile plutôt qu'un docker compose pour l'automatisation
+
+# On peut fixer la version utilisée de minio, comme ça on s'assure que les mise à jour ne cassent pas le projet
+FROM minio/minio:RELEASE.2024-01-31T20-20-33Z
+
+# Le p permet de crée le parent data, donc ça permet de créer le 'bucket-test' et de ne rien faire s'il existe déjà.
+RUN mkdir -p /data/test-bucket
