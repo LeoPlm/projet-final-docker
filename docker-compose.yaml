@@ -117,10 +117,8 @@ services:
       - app-network
     labels:
       - "traefik.enable=true"
-      # On définit une seule route propre pour le dashboard
       - "traefik.http.routers.my-dashboard.rule=Host(`traefik.localhost`)"
       - "traefik.http.routers.my-dashboard.entrypoints=web"
-      # C'est cette ligne qui pointe vers l'interface interne
       - "traefik.http.routers.my-dashboard.service=api@internal"
   
   adminer:
