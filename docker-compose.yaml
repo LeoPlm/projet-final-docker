@@ -49,7 +49,9 @@ services:
       - app-network
 
   nginx1:
-    image: nginx:latest
+    build: 
+      context: ./deploy/nginx
+      dockerfile: dockerfile
     container_name: nginx1
     ports:
       - "8081:80"
@@ -66,7 +68,9 @@ services:
       - "traefik.http.routers.nginx1.entrypoints=web"
 
   nginx2:
-    image: nginx:latest
+    build: 
+      context: ./deploy/nginx
+      dockerfile: dockerfile
     container_name: nginx2
     ports:
       - "8082:80"
