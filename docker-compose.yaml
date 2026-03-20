@@ -6,10 +6,10 @@ services:
       dockerfile: dockerfile
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: tp3iw
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -89,8 +89,8 @@ services:
     command: server /data --console-address ":9001"
     container_name: minio
     environment:
-      - MINIO_ROOT_USER=user_minio
-      - MINIO_ROOT_PASSWORD=password_minio
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
     networks:
       - app-network
     volumes:
