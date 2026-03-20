@@ -26,4 +26,4 @@ git clone https://github.com/LeoPlm/projet-final-docker.git
 docker compose up --build -d.
 
 
-Enjoy 😀.
+Enjoy 😀🤗🙏.
